@@ -1,0 +1,23 @@
+name: 部署ip服务到k3s
+on: push
+jobs:
+  deploy-k3s:
+    name: ip-linux-plus
+    runs-on: ubuntu-latest
+    steps:
+      - name: 获取代码
+        uses: actions/checkout@v2
+      - name: 打包推送到容器registry
+        shell: bash
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker build -t repo.treescale.com/liuxu/ip.linux.plus:latest --no-cache .
+          echo $DOCKER_PASSWORD | docker login --username=$DOCKER_USERNAME repo.treescale.com --password-stdin
+          docker push repo.treescale.com/liuxu/ip.linux.plus:latest
+      - name: k3s 更新版本
+        uses: WyriHaximus/github-action-helm3@v2
+        with:
+          exec: helm upgrade ip-linux-plus ./.helm/ip-linux-plus/ --install --atomic
+          kubeconfig: ${{ secrets.KUBECONFIG }}

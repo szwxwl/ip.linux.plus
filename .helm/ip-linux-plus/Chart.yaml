@@ -1,0 +1,16 @@
+annotations:
+  category: Infrastructure
+apiVersion: v2
+appVersion: 1.0.0
+dependencies:
+description: ip-linux-plus
+home: https://ip.linux.plus
+keywords:
+- ip.linux.plus
+maintainers:
+- email: i@mail.linux.plus
+  name: liuxu
+name: ip-linux-plus
+sources:
+- https://ip.linux.plus
+version: 1.0.0
