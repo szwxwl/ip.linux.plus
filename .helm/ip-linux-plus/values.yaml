@@ -2,9 +2,9 @@ ingress:
   hostname: ip.linux.plus
   tls: false
 service:
-  name: ip-linux-plus
+  name: ip-linux
 deployment:
-  name: ip-linux-plus
+  name: ip-linux
   replica: 2
   image:
     repository: repo.treescale.com/liuxu/ip.linux.plus:latest
