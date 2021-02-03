@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	db, err := ip2location.OpenDB("./database/IP2LOCATION-LITE-DB3.IPV6.BIN")
+	db, err := ip2location.OpenDB("/go/bin/IP2LOCATION-LITE-DB3.IPV6.BIN")
     if err != nil {
         return
     }
