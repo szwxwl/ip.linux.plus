@@ -1,9 +1,13 @@
-FROM openresty/openresty:latest
-COPY ./nginx/html /usr/local/openresty/html
-COPY ./nginx/lua/src /usr/local/openresty/nginx/lua_src
-COPY ./nginx/lua/lib/ip2location.lua /usr/local/openresty/lualib/ip2location.lua
-COPY ./nginx/lua/lib/inspect.lua /usr/local/openresty/lualib/inspect.lua
-COPY ./nginx/lua/lib/nums/bn.lua /usr/local/openresty/lualib/nums/bn.lua
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY ./nginx/ip_database /usr/local/openresty/nginx/ip_database
-CMD ["/usr/bin/openresty", "-g", "daemon off;"]
+FROM golang:alpine AS builder
+RUN apk update && apk add --no-cache git
+WORKDIR $GOPATH/src/mypackage/myapp/
+COPY ./server.go .
+RUN go get -d -v
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -ldflags="-w -s" -o /go/bin/server
+
+FROM scratch
+EXPOSE 80
+ENV GIN_MODE=release 
+COPY ./IP2LOCATION-LITE-DB3.IPV6.BIN /go/bin/IP2LOCATION-LITE-DB3.IPV6.BIN
+COPY --from=builder /go/bin/server /go/bin/server
+ENTRYPOINT ["/go/bin/server"]
