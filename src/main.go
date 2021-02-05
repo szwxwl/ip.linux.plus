@@ -19,7 +19,7 @@ func main() {
 	router.LoadHTMLGlob("/go/templates/*")
 	router.Use(cors.Default())
 	router.GET("/", func(c *gin.Context) {
-		ip := c.GetHeader('Cf-Connecting-Ip')
+		ip := c.GetHeader("Cf-Connecting-Ip")
 		if ip == "" {
 			ip = c.ClientIP()
 		}
