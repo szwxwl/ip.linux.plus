@@ -35,7 +35,7 @@ func main() {
 	})
 	router.GET("/search/:ip", func(c *gin.Context) {
 		ip := c.Param("ip")
-		if ip == nil {
+		if ip == "/" {
 			ip = c.ClientIP()
 		}
 		results, err := db.Get_all(ip)
@@ -62,6 +62,7 @@ func main() {
 			return
 		}
 		c.JSON(http.StatusOK, gin.H{
+			"ip": ip,
 			"country_short": results.Country_short,
 			"country_long": results.Country_long,
 			"region": results.Region,
