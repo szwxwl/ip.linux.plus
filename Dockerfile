@@ -9,6 +9,6 @@ FROM scratch
 EXPOSE 80
 ENV GIN_MODE=release 
 COPY ./src/database/IP2LOCATION-LITE-DB3.IPV6.BIN /go/bin/IP2LOCATION-LITE-DB3.IPV6.BIN
-COPY ./src/templates /go/
+COPY ./src/templates /go/templates
 COPY --from=builder /go/bin/server /go/bin/server
 ENTRYPOINT ["/go/bin/server"]
