@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"encoding/json"
+	"strings"
 	"net/http"
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
     "github.com/ip2location/ip2location-go"
@@ -15,9 +16,13 @@ func main() {
         return
     }
 	router := gin.Default()
+	router.LoadHTMLGlob("/go/templates/*")
 	router.Use(cors.Default())
 	router.GET("/", func(c *gin.Context) {
-		ip := c.ClientIP()
+		ip := c.GetHeader('Cf-Connecting-Ip')
+		if ip == "" {
+			ip = c.ClientIP()
+		}
 		returnType := c.DefaultQuery("type", "")
 		switch returnType {
 			case "json": 
@@ -34,8 +39,8 @@ func main() {
 		}
 	})
 	router.GET("/search/*ip", func(c *gin.Context) {
-		ip := c.Param("ip")
-		if ip == "/" {
+		ip := string.TrimLeft(c.Param("ip"), "/")
+		if ip == "" {
 			ip = c.ClientIP()
 		}
 		results, err := db.Get_all(ip)
@@ -68,6 +73,9 @@ func main() {
 			"region": results.Region,
 			"city": results.City,
 		})
+	})
+	router.GET("/doc", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.tmpl", nil)
 	})
 	router.Run(":80")
 }
