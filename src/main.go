@@ -33,7 +33,7 @@ func main() {
 				c.String(http.StatusOK, ip)
 		}
 	})
-	router.GET("/search/:ip", func(c *gin.Context) {
+	router.GET("/search/*ip", func(c *gin.Context) {
 		ip := c.Param("ip")
 		if ip == "/" {
 			ip = c.ClientIP()
