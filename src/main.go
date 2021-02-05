@@ -17,12 +17,7 @@ func main() {
 	router := gin.Default()
 	router.Use(cors.Default())
 	router.GET("/", func(c *gin.Context) {
-		ip := ""
-		if c.GetHeader("CF-Connecting-IP") != "" {	
-			ip = c.GetHeader("CF-Connecting-IP")
-		} else {
-			ip = c.ClientIP()
-		}
+		ip := c.ClientIP()
 		returnType := c.DefaultQuery("type", "")
 		switch returnType {
 			case "json": 
@@ -40,6 +35,9 @@ func main() {
 	})
 	router.GET("/search/:ip", func(c *gin.Context) {
 		ip := c.Param("ip")
+		if not ip {
+			ip = c.ClientIP()
+		}
 		results, err := db.Get_all(ip)
 		if err != nil {
 			fmt.Print(err)
