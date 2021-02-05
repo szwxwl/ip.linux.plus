@@ -35,7 +35,7 @@ func main() {
 	})
 	router.GET("/search/:ip", func(c *gin.Context) {
 		ip := c.Param("ip")
-		if not ip {
+		if ip == nil {
 			ip = c.ClientIP()
 		}
 		results, err := db.Get_all(ip)
