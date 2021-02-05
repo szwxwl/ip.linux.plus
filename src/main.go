@@ -39,7 +39,7 @@ func main() {
 		}
 	})
 	router.GET("/search/*ip", func(c *gin.Context) {
-		ip := string.TrimLeft(c.Param("ip"), "/")
+		ip := strings.TrimLeft(c.Param("ip"), "/")
 		if ip == "" {
 			ip = c.ClientIP()
 		}
