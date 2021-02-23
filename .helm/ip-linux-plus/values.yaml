@@ -6,6 +6,7 @@ service:
 deployment:
   name: ip-linux-plus
   replica: 2
+  affinityNode: spartan
   image:
     repository: repo.treescale.com/liuxu/ip.linux.plus:latest
     pullPolicy: Always

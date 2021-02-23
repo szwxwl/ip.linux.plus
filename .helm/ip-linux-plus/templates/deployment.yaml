@@ -16,6 +16,7 @@ spec:
       annotations:
         rollme: {{ randAlphaNum 5 | quote }}
     spec:
+      nodeName: {{ .Values.deployment.affinityNode }}
       imagePullSecrets:
         - name: {{ .Values.deployment.image.pullSecret }}
       containers:
