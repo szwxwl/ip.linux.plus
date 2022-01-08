@@ -13,9 +13,9 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker build -t repo.treescale.com/liuxu/ip.linux.plus:latest --no-cache .
-          echo $DOCKER_PASSWORD | docker login --username=$DOCKER_USERNAME repo.treescale.com --password-stdin
-          docker push repo.treescale.com/liuxu/ip.linux.plus:latest
+          docker build -t cloud.canister.io:5000/liuxu/ip.linux.plus:latest --no-cache .
+          echo $DOCKER_PASSWORD | docker login --username=$DOCKER_USERNAME cloud.canister.io:5000 --password-stdin
+          docker push cloud.canister.io:5000/liuxu/ip.linux.plus:latest
       - name: k3s 更新版本
         uses: WyriHaximus/github-action-helm3@v2
         with:

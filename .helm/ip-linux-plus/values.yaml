@@ -8,8 +8,8 @@ deployment:
   replica: 2
   affinityNode: spartan
   image:
-    repository: repo.treescale.com/liuxu/ip.linux.plus:latest
+    repository: cloud.canister.io:5000/liuxu/ip.linux.plus:latest
     pullPolicy: Always
-    pullSecret: treescale
+    pullSecret: canister
 
 
