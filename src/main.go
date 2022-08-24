@@ -35,7 +35,7 @@ func main() {
 				c.String(http.StatusOK, fmt.Sprintf("%s({\"ip\": \"%s\"});", callback, ip))
 				break
 			default: 
-				c.String(http.StatusOK, ip)
+				c.String(http.StatusOK, ip + "\n")
 		}
 	})
 	router.GET("/search/*ip", func(c *gin.Context) {
