@@ -6,7 +6,6 @@ service:
 deployment:
   name: ip-linux-plus
   replica: 2
-  affinityNode: spartan
   image:
     repository: cloud.canister.io:5000/liuxu/ip.linux.plus:latest
     pullPolicy: Always
